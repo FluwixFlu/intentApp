@@ -17,5 +17,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val btnCall = findViewById<Button>(R.id.btnCall)
+        val btnEmail = findViewById<Button>(R.id.btnEmail)
+        val btnMap = findViewById<Button>(R.id.btnMap)
+        val btnShare = findViewById<Button>(R.id.btnShare)
+
+
 
 }
