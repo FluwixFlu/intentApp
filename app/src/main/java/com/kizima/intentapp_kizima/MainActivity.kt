@@ -26,6 +26,11 @@ class MainActivity : AppCompatActivity() {
         val btnMap = findViewById<Button>(R.id.btnMap)
         val btnShare = findViewById<Button>(R.id.btnShare)
 
+        btnCall.setOnClickListener {
+            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:+74951234567"))
+            openIntentOrToast(intent, "Нет приложения для звонка")
+        }
+
 
 
 }
