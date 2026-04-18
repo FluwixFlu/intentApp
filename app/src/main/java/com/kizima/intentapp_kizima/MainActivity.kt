@@ -56,6 +56,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
+        btnShare.setOnClickListener {
+            val sendIntent = Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(
+                    Intent.EXTRA_TEXT,
+                    "Контакт: +7 (495) 123-45-67, contact@example.com"
+                )
+            }
+            startActivity(Intent.createChooser(sendIntent, "Поделиться через"))
+        }
+    }
 
 }
