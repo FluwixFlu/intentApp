@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         btnEmail.setOnClickListener {
             val intent = Intent(Intent.ACTION_SENDTO).apply {
                 data = Uri.parse("mailto:")
-                putExtra(Intent.EXTRA_EMAIL, arrayOf("contact@example.com"))
+                putExtra(Intent.EXTRA_EMAIL, arrayOf("cont@gmail.com"))
                 putExtra(Intent.EXTRA_SUBJECT, "Обращение")
             }
 
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnMap.setOnClickListener {
-            val geoUri = Uri.parse("geo:0,0?q=60.0237,30.2289(Наш офис)")
+            val geoUri = Uri.parse("geo:0,0?q=59.940219,30.318205")
             val intent = Intent(Intent.ACTION_VIEW, geoUri)
 
             if (intent.resolveActivity(packageManager) != null) {
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         btnShare.setOnClickListener {
             val sendIntent = Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
-                putExtra(Intent.EXTRA_TEXT, "Контакт: +7 (495) 123-45-67, contact@example.com")
+                putExtra(Intent.EXTRA_TEXT, "Контакт: +7 (495) 123-45-67, cont@gmail.com")
             }
 
             val chooser = Intent.createChooser(sendIntent, "Поделиться через")
