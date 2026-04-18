@@ -31,6 +31,14 @@ class MainActivity : AppCompatActivity() {
             openIntentOrToast(intent, "Нет приложения для звонка")
         }
 
+        btnEmail.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SENDTO).apply {
+                data = Uri.parse("mailto:contact@example.com")
+                putExtra(Intent.EXTRA_SUBJECT, "Обращение")
+            }
+            openIntentOrToast(intent, "Нет почтового приложения")
+        }
+
 
 
 }
