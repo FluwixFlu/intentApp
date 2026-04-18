@@ -9,14 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private fun openIntentOrToast(intent: Intent, errorText: String) {
-        if (intent.resolveActivity(packageManager) != null) {
-            startActivity(intent)
-        } else {
-            Toast.makeText(this, errorText, Toast.LENGTH_SHORT).show()
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -26,46 +18,50 @@ class MainActivity : AppCompatActivity() {
         val btnMap = findViewById<Button>(R.id.btnMap)
         val btnShare = findViewById<Button>(R.id.btnShare)
 
+
         btnCall.setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:+74951234567"))
-            openIntentOrToast(intent, "Нет приложения для звонка")
+
+            if (intent.resolveActivity(packageManager) != null) {
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Нет приложения для звонка", Toast.LENGTH_SHORT).show()
+            }
         }
 
         btnEmail.setOnClickListener {
             val intent = Intent(Intent.ACTION_SENDTO).apply {
-                data = Uri.parse("mailto:contact@example.com")
+                data = Uri.parse("mailto:")
+                putExtra(Intent.EXTRA_EMAIL, arrayOf("contact@example.com"))
                 putExtra(Intent.EXTRA_SUBJECT, "Обращение")
             }
-            openIntentOrToast(intent, "Нет почтового приложения")
+
+            if (intent.resolveActivity(packageManager) != null) {
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Нет почтового приложения", Toast.LENGTH_SHORT).show()
+            }
         }
 
         btnMap.setOnClickListener {
-            val geoIntent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("geo:60.0237,30.2289?q=60.0237,30.2289(Наш%20офис)")
-            )
+            val geoUri = Uri.parse("geo:0,0?q=60.0237,30.2289(Наш офис)")
+            val intent = Intent(Intent.ACTION_VIEW, geoUri)
 
-            if (geoIntent.resolveActivity(packageManager) != null) {
-                startActivity(geoIntent)
+            if (intent.resolveActivity(packageManager) != null) {
+                startActivity(intent)
             } else {
-                val webIntent = Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("https://www.google.com/maps/search/?api=1&query=60.0237,30.2289")
-                )
-                openIntentOrToast(webIntent, "Нет приложения карт")
+                Toast.makeText(this, "Нет приложения карт", Toast.LENGTH_SHORT).show()
             }
         }
 
         btnShare.setOnClickListener {
             val sendIntent = Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
-                putExtra(
-                    Intent.EXTRA_TEXT,
-                    "Контакт: +7 (495) 123-45-67, contact@example.com"
-                )
+                putExtra(Intent.EXTRA_TEXT, "Контакт: +7 (495) 123-45-67, contact@example.com")
             }
-            startActivity(Intent.createChooser(sendIntent, "Поделиться через"))
+
+            val chooser = Intent.createChooser(sendIntent, "Поделиться через")
+            startActivity(chooser)
         }
     }
-
 }
