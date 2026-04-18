@@ -39,6 +39,23 @@ class MainActivity : AppCompatActivity() {
             openIntentOrToast(intent, "Нет почтового приложения")
         }
 
+        btnMap.setOnClickListener {
+            val geoIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("geo:60.0237,30.2289?q=60.0237,30.2289(Наш%20офис)")
+            )
+
+            if (geoIntent.resolveActivity(packageManager) != null) {
+                startActivity(geoIntent)
+            } else {
+                val webIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://www.google.com/maps/search/?api=1&query=60.0237,30.2289")
+                )
+                openIntentOrToast(webIntent, "Нет приложения карт")
+            }
+        }
+
 
 
 }
